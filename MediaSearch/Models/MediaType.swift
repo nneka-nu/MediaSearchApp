@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MediaType: String, CaseIterable, Identifiable {
+enum MediaType: String {
     case ebook, movie, tvShow
 
     var title: String {
@@ -24,3 +24,5 @@ enum MediaType: String, CaseIterable, Identifiable {
 
     var id: String { self.rawValue }
 }
+
+extension MediaType: CaseIterable, Identifiable, Codable { }

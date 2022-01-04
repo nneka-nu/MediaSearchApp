@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		B93115222784712C001B1845 /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93115212784712C001B1845 /* MediaType.swift */; };
 		B93115242784787E001B1845 /* MediaListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93115232784787E001B1845 /* MediaListView.swift */; };
+		B931152627847C1E001B1845 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931152527847C1E001B1845 /* Media.swift */; };
+		B931152827847CB5001B1845 /* ITunesAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931152727847CB5001B1845 /* ITunesAPIResponse.swift */; };
+		B931152A2784803C001B1845 /* Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93115292784803C001B1845 /* Kind.swift */; };
 		B9A669222783BA540012E924 /* MediaSearchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A669212783BA540012E924 /* MediaSearchApp.swift */; };
 		B9A669242783BA540012E924 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A669232783BA540012E924 /* ContentView.swift */; };
 		B9A669262783BA560012E924 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9A669252783BA560012E924 /* Assets.xcassets */; };
@@ -41,6 +44,9 @@
 /* Begin PBXFileReference section */
 		B93115212784712C001B1845 /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
 		B93115232784787E001B1845 /* MediaListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListView.swift; sourceTree = "<group>"; };
+		B931152527847C1E001B1845 /* Media.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
+		B931152727847CB5001B1845 /* ITunesAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITunesAPIResponse.swift; sourceTree = "<group>"; };
+		B93115292784803C001B1845 /* Kind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kind.swift; sourceTree = "<group>"; };
 		B9A6691E2783BA540012E924 /* MediaSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9A669212783BA540012E924 /* MediaSearchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSearchApp.swift; sourceTree = "<group>"; };
 		B9A669232783BA540012E924 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -85,6 +91,9 @@
 			isa = PBXGroup;
 			children = (
 				B93115212784712C001B1845 /* MediaType.swift */,
+				B931152527847C1E001B1845 /* Media.swift */,
+				B931152727847CB5001B1845 /* ITunesAPIResponse.swift */,
+				B93115292784803C001B1845 /* Kind.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -308,9 +317,12 @@
 				B9A669502783C3D80012E924 /* SearchView.swift in Sources */,
 				B9A669522783C3F30012E924 /* SearchViewModel.swift in Sources */,
 				B9A669242783BA540012E924 /* ContentView.swift in Sources */,
+				B931152827847CB5001B1845 /* ITunesAPIResponse.swift in Sources */,
 				B9A669222783BA540012E924 /* MediaSearchApp.swift in Sources */,
 				B9A6694E2783C28D0012E924 /* SearchBar.swift in Sources */,
+				B931152627847C1E001B1845 /* Media.swift in Sources */,
 				B93115242784787E001B1845 /* MediaListView.swift in Sources */,
+				B931152A2784803C001B1845 /* Kind.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

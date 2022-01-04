@@ -1,5 +1,5 @@
 //
-//  SearchBarRepresentable.swift
+//  SearchBar.swift
 //  MediaSearch
 //
 //  Created by Nneka Udoh on 1/3/22.
