@@ -8,9 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    enum TabItem: String {
+        case search, favorites
+    }
+
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        TabView {
+            search
+            favorites
+        }
+    }
+
+    var search: some View {
+        NavigationView {
+            SearchView()
+                .navigationTitle("Search")
+                .navigationBarHidden(true)
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .tabItem {
+            Image(systemName: "magnifyingglass")
+            Text("Search")
+        }
+        .tag(TabItem.search)
+    }
+
+    var favorites: some View {
+        NavigationView {
+            Text("Favorites")
+                .navigationTitle("Favorites")
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .tabItem {
+            Image(systemName: "star")
+            Text("Favorites")
+        }
+        .tag(TabItem.favorites)
     }
 }
 
