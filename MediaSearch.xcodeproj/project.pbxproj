@@ -13,6 +13,13 @@
 		B931152827847CB5001B1845 /* ITunesAPIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931152727847CB5001B1845 /* ITunesAPIResponse.swift */; };
 		B931152A2784803C001B1845 /* Kind.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93115292784803C001B1845 /* Kind.swift */; };
 		B931152D27848A13001B1845 /* String+StripHTML.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931152C27848A13001B1845 /* String+StripHTML.swift */; };
+		B931153127849FA8001B1845 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931153027849FA8001B1845 /* APIRequest.swift */; };
+		B931153327849FEA001B1845 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931153227849FEA001B1845 /* Path.swift */; };
+		B93115352784A031001B1845 /* Query.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93115342784A031001B1845 /* Query.swift */; };
+		B93115372784A045001B1845 /* SearchQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93115362784A045001B1845 /* SearchQuery.swift */; };
+		B93115392784A0FB001B1845 /* LookupQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B93115382784A0FB001B1845 /* LookupQuery.swift */; };
+		B931153B2784A160001B1845 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931153A2784A160001B1845 /* APIError.swift */; };
+		B931153D2784A553001B1845 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B931153C2784A553001B1845 /* APIManager.swift */; };
 		B9A669222783BA540012E924 /* MediaSearchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A669212783BA540012E924 /* MediaSearchApp.swift */; };
 		B9A669242783BA540012E924 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A669232783BA540012E924 /* ContentView.swift */; };
 		B9A669262783BA560012E924 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9A669252783BA560012E924 /* Assets.xcassets */; };
@@ -49,6 +56,13 @@
 		B931152727847CB5001B1845 /* ITunesAPIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITunesAPIResponse.swift; sourceTree = "<group>"; };
 		B93115292784803C001B1845 /* Kind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kind.swift; sourceTree = "<group>"; };
 		B931152C27848A13001B1845 /* String+StripHTML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+StripHTML.swift"; sourceTree = "<group>"; };
+		B931153027849FA8001B1845 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		B931153227849FEA001B1845 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		B93115342784A031001B1845 /* Query.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Query.swift; sourceTree = "<group>"; };
+		B93115362784A045001B1845 /* SearchQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQuery.swift; sourceTree = "<group>"; };
+		B93115382784A0FB001B1845 /* LookupQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookupQuery.swift; sourceTree = "<group>"; };
+		B931153A2784A160001B1845 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		B931153C2784A553001B1845 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B9A6691E2783BA540012E924 /* MediaSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9A669212783BA540012E924 /* MediaSearchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSearchApp.swift; sourceTree = "<group>"; };
 		B9A669232783BA540012E924 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -96,16 +110,17 @@
 				B931152527847C1E001B1845 /* Media.swift */,
 				B93115212784712C001B1845 /* MediaType.swift */,
 				B93115292784803C001B1845 /* Kind.swift */,
+				B931153227849FEA001B1845 /* Path.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		B931152B27848952001B1845 /* Extenstions */ = {
+		B931152B27848952001B1845 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				B931152C27848A13001B1845 /* String+StripHTML.swift */,
 			);
-			path = Extenstions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		B931152E2784937D001B1845 /* Shared */ = {
@@ -114,6 +129,19 @@
 				B93115232784787E001B1845 /* MediaListView.swift */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		B931152F27849F1E001B1845 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				B931153C2784A553001B1845 /* APIManager.swift */,
+				B931153027849FA8001B1845 /* APIRequest.swift */,
+				B931153A2784A160001B1845 /* APIError.swift */,
+				B93115342784A031001B1845 /* Query.swift */,
+				B93115362784A045001B1845 /* SearchQuery.swift */,
+				B93115382784A0FB001B1845 /* LookupQuery.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		B9A669152783BA540012E924 = {
@@ -139,12 +167,13 @@
 		B9A669202783BA540012E924 /* MediaSearch */ = {
 			isa = PBXGroup;
 			children = (
-				B931152B27848952001B1845 /* Extenstions */,
-				B9A6694B2783C2730012E924 /* Views */,
 				B931152027847111001B1845 /* Models */,
-				B9A669272783BA560012E924 /* Preview Content */,
+				B9A6694B2783C2730012E924 /* Views */,
+				B931152B27848952001B1845 /* Extensions */,
+				B931152F27849F1E001B1845 /* API */,
 				B9A669212783BA540012E924 /* MediaSearchApp.swift */,
 				B9A669252783BA560012E924 /* Assets.xcassets */,
+				B9A669272783BA560012E924 /* Preview Content */,
 			);
 			path = MediaSearch;
 			sourceTree = "<group>";
@@ -334,14 +363,21 @@
 			files = (
 				B93115222784712C001B1845 /* MediaType.swift in Sources */,
 				B9A669502783C3D80012E924 /* SearchView.swift in Sources */,
+				B93115372784A045001B1845 /* SearchQuery.swift in Sources */,
+				B931153B2784A160001B1845 /* APIError.swift in Sources */,
 				B9A669522783C3F30012E924 /* SearchViewModel.swift in Sources */,
 				B9A669242783BA540012E924 /* ContentView.swift in Sources */,
 				B931152827847CB5001B1845 /* ITunesAPIResponse.swift in Sources */,
 				B931152D27848A13001B1845 /* String+StripHTML.swift in Sources */,
 				B9A669222783BA540012E924 /* MediaSearchApp.swift in Sources */,
 				B9A6694E2783C28D0012E924 /* SearchBar.swift in Sources */,
+				B93115352784A031001B1845 /* Query.swift in Sources */,
 				B931152627847C1E001B1845 /* Media.swift in Sources */,
+				B931153D2784A553001B1845 /* APIManager.swift in Sources */,
 				B93115242784787E001B1845 /* MediaListView.swift in Sources */,
+				B93115392784A0FB001B1845 /* LookupQuery.swift in Sources */,
+				B931153327849FEA001B1845 /* Path.swift in Sources */,
+				B931153127849FA8001B1845 /* APIRequest.swift in Sources */,
 				B931152A2784803C001B1845 /* Kind.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
