@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    @StateObject var searchViewModel = SearchViewModel()
+    @StateObject private var searchViewModel = SearchViewModel()
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -24,8 +24,18 @@ struct SearchView: View {
             .disabled(searchViewModel.isFetching)
             .pickerStyle(SegmentedPickerStyle())
 
-            MediaListView()
+            ZStack {
+                MediaListView(media: searchViewModel.searchResults,
+                              showProgressViewFooter: true)
+                
+                if searchViewModel.isFetching {
+                    ProgressView()
+                }
 
+                if searchViewModel.noResultsFound {
+                    Text("No results found.")
+                }
+            }
         }
     }
 }

@@ -79,16 +79,39 @@ extension Media: Codable {
     }
 }
 
-//extension Media {
-//    static let sampleData: [Media] = [
-//        Media(id: <#T##String#>,
-//              name: <#T##String#>,
-//              description: <#T##String#>,
-//              type: <#T##MediaType#>,
-//              genres: <#T##[String]#>,
-//              price: <#T##String#>,
-//              imageUrl: <#T##URL#>,
-//              previewUrl: <#T##URL?#>,
-//              releaseDate: <#T##Date#>)
-//    ]
-//}
+// MARK: Sample Data for Media
+extension Media {
+    static let imageUrlData: [String] = [
+        """
+        https://is5-ssl.mzstatic.com/image/thumb/Publication1 \
+        25/v4/0d/b4/db/0db4db25-4fc4-52f0-492c-95d3d3daec86/9780463068281 \
+        .jpg/100x100bb.jpg
+        """
+    ]
+    static let singleMedia = Media(
+        id: "1436991868",
+        name: "Run from Ruin",
+        description:
+        """
+        They’re not undead; they’re just angry…  \
+        The DataMind meditation app has revolutionized the world, \
+        making people smarter, happier, and more productive. But a \
+        programming glitch in the final update causes billions of \
+        users to experience uncontrollable rage and aggression. \
+        <br /><br />Nick, an ordinary high school senior in Fairbanks \
+        Alaska, is suddenly thrust into this life or death arena. \
+        He and his brother must escape the zombie-like hordes of \
+        blood-thirsty maniacs and seek refuge north of the arctic \
+        circle.<br /><br />The four-hundred-mile journey tests the \
+        boys, their wits, and their trust in each other. They think \
+        they’re fighting to stay alive; but little do they know, \
+        they’re fighting to save mankind.
+        """,
+        type: .ebook,
+        genres: ["Horror", "Books", "Fiction & Literature", "Sci-Fi & Fantasy"],
+        price: "Free",
+        imageUrl: URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Publication125/v4/0d/b4/db/0db4db25-4fc4-52f0-492c-95d3d3daec86/9780463068281.jpg/100x100bb.jpg")!,
+        previewUrl: nil,
+        releaseDate: Date().addingTimeInterval(-1 * 3 * 365 * 24 * 60 * 60))
+    static let sampleData: [Media] = (0...6).map { _ in Media.singleMedia }
+}
