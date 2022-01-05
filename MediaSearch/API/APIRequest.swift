@@ -32,6 +32,8 @@ extension APIRequest {
             return "https://itunes.apple.com/search"
         case .lookup:
             return "https://itunes.apple.com/lookup"
+        case .image(let url):
+            return url.absoluteString
         }
     }
 }
@@ -73,6 +75,22 @@ extension APIRequest where Response: Decodable {
                 return data
             })
             .decode(type: Response.self, decoder: jsonDecoder)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+}
+
+// MARK: APIRequest for an image
+extension APIRequest {
+    func sendForImage() -> AnyPublisher<Data, Never> {
+        guard let url = URL(string: baseUrl) else {
+            return Just(Data()).eraseToAnyPublisher()
+        }
+
+        return urlSession.dataTaskPublisher(for: url)
+            .map { $0.data }
+            .replaceError(with: Data())
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }

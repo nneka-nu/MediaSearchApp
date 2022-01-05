@@ -11,6 +11,7 @@ enum APIError: Error, LocalizedError {
     case urlRequest
     case network
     case server
+    case generic
 
     var errorDescription: String? {
         switch self {
@@ -24,6 +25,8 @@ enum APIError: Error, LocalizedError {
                 """
         case .server:
             return "We could not connect to the server."
+        case .generic:
+            return "Something went wrong. Please try again later."
         }
     }
 }

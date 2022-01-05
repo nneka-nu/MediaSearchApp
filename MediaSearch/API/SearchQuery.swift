@@ -13,7 +13,6 @@ struct SearchQuery: Query {
     var limit: Int = 10
 
     var toDictionary: [String: String] {
-        print("toDictionary media.rawValue", media.rawValue)
         return [
             "term": term,
             "media": media.rawValue,

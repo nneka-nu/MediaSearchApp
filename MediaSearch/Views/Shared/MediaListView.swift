@@ -8,33 +8,47 @@
 import SwiftUI
 
 struct MediaListView: View {
-    var media: [Media]
+    var mediaList: [Media]
+    var imagesData: [URL: Data] = [:]
+    var queryLimit: Int = 0
     var showProgressViewFooter = false
+
+    var imageWidth: CGFloat = 90
+    var imageHeight: CGFloat = 100
 
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading) {
-                ForEach(0..<media.count) {index in
-                    row(index: index)
+                ForEach(mediaList) { item in
+                    row(for: item)
                 }
             }
             .padding([.leading, .bottom], 16)
         }
     }
 
-    func row(index: Int) -> some View {
-        Section(footer: footer(at: index)) {
+    @ViewBuilder
+    func row(for mediaItem: Media) -> some View {
+        Section(footer: footer(for: mediaItem)) {
             HStack(alignment: .top, spacing: 24) {
-                Image(systemName: "photo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 66, height: 100)
-                
+                if let data = imagesData[mediaItem.imageUrl],
+                   let uiImage = UIImage(data: data) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: imageWidth)
+                } else {
+                    Rectangle()
+                        .fill(Color(red: 204/255, green: 204/255, blue: 204/255))
+                        .frame(width: imageWidth, height: imageHeight)
+                }
+
                 VStack(alignment: .leading, spacing: 10) {
-                    Text(media[index].name)
+                    Text(mediaItem.name)
                         .font(.system(size: 18, weight: .semibold, design: .default))
                         .fixedSize(horizontal: false, vertical: true)
-                    Text(media[index].description.stripHTML())
+
+                    Text(mediaItem.description.stripHTML())
                         .lineLimit(3)
                 }
             }
@@ -49,8 +63,10 @@ struct MediaListView: View {
     }
 
     @ViewBuilder
-    func footer(at index: Int) -> some View {
-        if (showProgressViewFooter && index == media.endIndex - 1) {
+    func footer(for mediaItem: Media) -> some View {
+        if showProgressViewFooter && mediaList.count < queryLimit {
+            EmptyView()
+        } else if showProgressViewFooter && mediaItem == mediaList.last {
             HStack {
                 Spacer()
 
@@ -59,7 +75,6 @@ struct MediaListView: View {
 
                 Spacer()
             }
-
         } else {
             EmptyView()
         }
@@ -68,6 +83,6 @@ struct MediaListView: View {
 
 struct MediaListView_Previews: PreviewProvider {
     static var previews: some View {
-        MediaListView(media: Media.sampleData)
+        MediaListView(mediaList: Media.sampleData, queryLimit: 10)
     }
 }

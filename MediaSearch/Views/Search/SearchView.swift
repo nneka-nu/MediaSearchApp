@@ -25,7 +25,9 @@ struct SearchView: View {
             .pickerStyle(SegmentedPickerStyle())
 
             ZStack {
-                MediaListView(media: searchViewModel.searchResults,
+                MediaListView(mediaList: searchViewModel.searchResults,
+                              imagesData: searchViewModel.imagesData,
+                              queryLimit: searchViewModel.queryLimit,
                               showProgressViewFooter: true)
                 
                 if searchViewModel.isFetching {
@@ -34,8 +36,18 @@ struct SearchView: View {
 
                 if searchViewModel.noResultsFound {
                     Text("No results found.")
+                        .bold()
                 }
             }
+        }
+        .alert(isPresented: $searchViewModel.showErrorAlert) {
+            let message = searchViewModel.errorMessage
+            searchViewModel.errorMessage = nil
+
+            return Alert(
+                title: Text("Error"),
+                message: Text(message ?? APIError.generic.localizedDescription)
+            )
         }
     }
 }

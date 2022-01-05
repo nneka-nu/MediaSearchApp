@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Media {
+struct Media: Identifiable {
     var id: String
     var name: String
     var description: String
@@ -17,6 +17,12 @@ struct Media {
     var imageUrl: URL
     var previewUrl: URL?
     var releaseDate: Date
+}
+
+extension Media: Equatable {
+    static func == (lhs: Media, rhs: Media) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 extension Media: Codable {
@@ -79,15 +85,9 @@ extension Media: Codable {
     }
 }
 
-// MARK: Sample Data for Media
+// MARK: Sample data for Media
 extension Media {
-    static let imageUrlData: [String] = [
-        """
-        https://is5-ssl.mzstatic.com/image/thumb/Publication1 \
-        25/v4/0d/b4/db/0db4db25-4fc4-52f0-492c-95d3d3daec86/9780463068281 \
-        .jpg/100x100bb.jpg
-        """
-    ]
+    static let sampleData: [Media] = (0...6).map { _ in Media.singleMedia }
     static let singleMedia = Media(
         id: "1436991868",
         name: "Run from Ruin",
@@ -113,5 +113,4 @@ extension Media {
         imageUrl: URL(string: "https://is5-ssl.mzstatic.com/image/thumb/Publication125/v4/0d/b4/db/0db4db25-4fc4-52f0-492c-95d3d3daec86/9780463068281.jpg/100x100bb.jpg")!,
         previewUrl: nil,
         releaseDate: Date().addingTimeInterval(-1 * 3 * 365 * 24 * 60 * 60))
-    static let sampleData: [Media] = (0...6).map { _ in Media.singleMedia }
 }

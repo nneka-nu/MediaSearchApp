@@ -9,4 +9,5 @@ import Foundation
 
 struct APIManager<Response>: APIRequest {
     var path: Path
+    var urlSession: URLSession = .shared
 }
