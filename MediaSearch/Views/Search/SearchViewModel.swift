@@ -9,7 +9,6 @@ import Foundation
 import Combine
 
 class SearchViewModel: ObservableObject {
-    typealias SearchInfo = (term: String, type: MediaType)
     typealias ImageInfo = (url: URL, data: Data)
 
     @Published var searchTerm = ""
@@ -17,58 +16,71 @@ class SearchViewModel: ObservableObject {
     @Published var noResultsFound = false
     @Published var imagesData: [URL: Data] = [:]
     @Published var showErrorAlert = false
+    @Published var isLoadingMore = false
+    @Published var isFetchingInitialResults = false
     @Published var mediaType = MediaType.ebook {
         didSet {
             search()
         }
     }
-    @Published var isFetching = false {
-        didSet {
-            if isFetching {
-                noResultsFound = false
-                searchResults = []
-            }
-        }
-    }
 
-    private var searchPublisher = PassthroughSubject<SearchInfo, Never>()
     private var subscriptions = Set<AnyCancellable>()
     private var requestSubscription: AnyCancellable?
-    private var previousSearch: SearchInfo?
+    private var previousQuery: SearchQuery?
+    private var resultIds: [String: String] = [:]
+    private var loadingMoreComplete = false
+    private var queryLimit: Int = 20
 
-    var queryLimit: Int = 10
     var errorMessage: String?
 
     func search() {
-        print("search() called", searchTerm, mediaType)
         guard !searchTerm.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
 
-        let newSearch = (term: searchTerm, type: mediaType)
-        if let prev = previousSearch,
-           prev.term == newSearch.term,
-           prev.type == newSearch.type {
+        let newQuery = SearchQuery(term: searchTerm,
+                                   media: mediaType,
+                                   limit: queryLimit)
+
+        if let previousQuery = previousQuery,
+           previousQuery.term == newQuery.term,
+           previousQuery.media == newQuery.media {
             // duplicate search
             return
         }
-        previousSearch = newSearch
 
-        sendRequest()
+        resetSearch()
+        previousQuery = newQuery
+        sendRequest(with: newQuery)
+    }
+
+    func loadMore() {
+        guard !loadingMoreComplete, searchResults.count >= queryLimit else {
+            stopLoadingMore()
+            return
+        }
+
+        isLoadingMore = true
+
+        if var query = previousQuery {
+            query.offset = searchResults.count
+            previousQuery = query
+            sendRequest(with: query)
+            return
+        }
     }
 }
 
 extension SearchViewModel {
-    private func sendRequest() {
-        isFetching = true
-        let searchQuery = SearchQuery(term: searchTerm,
-                                      media: mediaType,
-                                      limit: queryLimit)
-        let apiManager = APIManager<ITunesAPIResponse>(path: .search(searchQuery))
-
+    private func sendRequest(with query: SearchQuery) {
+        if searchResults.count == 0 {
+            isFetchingInitialResults = true
+        }
+        
+        let apiManager = APIManager<ITunesAPIResponse>(path: .search(query))
         requestSubscription = apiManager.send()
             .sink { [weak self] completion in
-                self?.isFetching = false
+                self?.isFetchingInitialResults = false
                 if case .failure(let error) = completion {
                     self?.handleSearchError(error)
                 }
@@ -92,21 +104,54 @@ extension SearchViewModel {
 
     private func handleSearchResults(_ results: [Media]) {
         guard results.count > 0 else {
-            noResultsFound = true
+            if isLoadingMore {
+                stopLoadingMore()
+            } else {
+                noResultsFound = true
+            }
             return
         }
 
-        searchResults = results
+        // iTunes Search API often returns duplicates
+        // remove duplicates by id.
+        var newResults: [Media] = []
 
-        for result in results {
-            sendImageRequest(url: result.imageUrl)
+        for item in results where resultIds[item.id] != item.id {
+            resultIds[item.id] = item.id
+            newResults.append(item)
+            sendImageRequest(url: item.imageUrl)
         }
+
+        guard newResults.count > 0 else {
+            if isLoadingMore {
+                stopLoadingMore()
+            }
+            return
+        }
+
+        searchResults += newResults
     }
 
     private func handleSearchError(_ error: Error) {
         errorMessage = error.localizedDescription
         showErrorAlert = true
-        // allow user to retry the same search if there was an error
-        previousSearch = nil
+        isLoadingMore = false
+        // allow user to retry the same search due to the error
+        previousQuery = nil
+    }
+
+    private func resetSearch() {
+        searchResults = []
+        resultIds = [:]
+        noResultsFound = false
+        errorMessage = nil
+        previousQuery = nil
+        isLoadingMore = false
+        loadingMoreComplete = false
+    }
+
+    private func stopLoadingMore() {
+        isLoadingMore = false
+        loadingMoreComplete = true
     }
 }

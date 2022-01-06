@@ -21,16 +21,14 @@ struct SearchView: View {
                     Text(section.title).tag(section)
                 }
             }
-            .disabled(searchViewModel.isFetching)
+            .disabled(searchViewModel.isFetchingInitialResults)
             .pickerStyle(SegmentedPickerStyle())
 
             ZStack {
-                MediaListView(mediaList: searchViewModel.searchResults,
-                              imagesData: searchViewModel.imagesData,
-                              queryLimit: searchViewModel.queryLimit,
-                              showProgressViewFooter: true)
+                MediaListView()
+                    .environmentObject(searchViewModel)
                 
-                if searchViewModel.isFetching {
+                if searchViewModel.isFetchingInitialResults {
                     ProgressView()
                 }
 

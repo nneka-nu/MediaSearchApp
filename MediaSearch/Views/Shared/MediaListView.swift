@@ -8,10 +8,7 @@
 import SwiftUI
 
 struct MediaListView: View {
-    var mediaList: [Media]
-    var imagesData: [URL: Data] = [:]
-    var queryLimit: Int = 0
-    var showProgressViewFooter = false
+    @EnvironmentObject var searchViewModel: SearchViewModel
 
     var imageWidth: CGFloat = 90
     var imageHeight: CGFloat = 100
@@ -19,7 +16,7 @@ struct MediaListView: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading) {
-                ForEach(mediaList) { item in
+                ForEach(searchViewModel.searchResults) { item in
                     row(for: item)
                 }
             }
@@ -31,7 +28,7 @@ struct MediaListView: View {
     func row(for mediaItem: Media) -> some View {
         Section(footer: footer(for: mediaItem)) {
             HStack(alignment: .top, spacing: 24) {
-                if let data = imagesData[mediaItem.imageUrl],
+                if let data = searchViewModel.imagesData[mediaItem.imageUrl],
                    let uiImage = UIImage(data: data) {
                     Image(uiImage: uiImage)
                         .resizable()
@@ -39,7 +36,7 @@ struct MediaListView: View {
                         .frame(maxWidth: imageWidth)
                 } else {
                     Rectangle()
-                        .fill(Color(red: 204/255, green: 204/255, blue: 204/255))
+                        .fill(Color("GrayColor"))
                         .frame(width: imageWidth, height: imageHeight)
                 }
 
@@ -56,33 +53,41 @@ struct MediaListView: View {
 
             Divider()
                 .onAppear {
-                   // MARK: TODO lazy load next set of results here
-//                    print("Divider \(index) appeared")
+                    if mediaItem == searchViewModel.searchResults.last {
+                        searchViewModel.loadMore()
+                    }
                 }
         }
     }
 
     @ViewBuilder
     func footer(for mediaItem: Media) -> some View {
-        if showProgressViewFooter && mediaList.count < queryLimit {
-            EmptyView()
-        } else if showProgressViewFooter && mediaItem == mediaList.last {
+        if searchViewModel.isLoadingMore,
+           mediaItem == searchViewModel.searchResults.last {
             HStack {
                 Spacer()
 
-                ProgressView("Loading")
+                ProgressView("Loading...")
                     .padding([.top, .bottom], 10)
 
                 Spacer()
             }
-        } else {
+        }  else {
             EmptyView()
         }
     }
 }
 
 struct MediaListView_Previews: PreviewProvider {
+    static let searchViewModel: SearchViewModel = {
+        let viewModel = SearchViewModel()
+        viewModel.searchResults = Media.sampleData
+        return viewModel
+    }()
+
     static var previews: some View {
-        MediaListView(mediaList: Media.sampleData, queryLimit: 10)
+        MediaListView()
+            .environmentObject(searchViewModel)
+
     }
 }
