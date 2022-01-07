@@ -22,6 +22,17 @@ enum MediaType: String {
         }
     }
 
+    var entity: String {
+        switch self {
+        case .ebook:
+            return "ebook"
+        case .movie:
+            return "movie"
+        case .tvShow:
+            return "tvSeason"
+        }
+    }
+
     var id: String { self.rawValue }
 }
 

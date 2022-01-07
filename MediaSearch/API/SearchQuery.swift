@@ -17,6 +17,7 @@ struct SearchQuery: Query {
         return [
             "term": term,
             "media": media.rawValue,
+            "entity": media.entity,
             "limit": String(limit),
             "offset": String(offset)
         ]

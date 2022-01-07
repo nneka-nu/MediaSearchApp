@@ -135,6 +135,7 @@
 		B931152E2784937D001B1845 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				B9A6694C2783C27B0012E924 /* UIKit */,
 				B97B43DD2787A76B00432404 /* ImagePlaceholderView.swift */,
 				B97B43DB2787A62400432404 /* MediaDetailView.swift */,
 			);
@@ -217,7 +218,6 @@
 			isa = PBXGroup;
 			children = (
 				B931152E2784937D001B1845 /* Shared */,
-				B9A6694C2783C27B0012E924 /* UIKit */,
 				B9A669532783C3F70012E924 /* Search */,
 				B9A669232783BA540012E924 /* ContentView.swift */,
 			);

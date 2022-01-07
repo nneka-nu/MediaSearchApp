@@ -39,15 +39,28 @@ extension Media: Codable {
         case longDescription
         case primaryGenreName
         case trackPrice
+        case collectionId
+        case collectionName
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = String(try container.decode(Int.self, forKey: .id))
-        name = try container.decode(String.self, forKey: .name)
+        let additionalContainer = try decoder.container(keyedBy: AdditionalKeys.self)
 
-        let kind = try container.decode(String.self, forKey: .type)
-        if let mediaKind = Kind(rawValue: kind) {
+        if let id = try? container.decode(Int.self, forKey: .id) {
+            self.id = String(id)
+        } else {
+            id = String(try additionalContainer.decode(Int.self, forKey: .collectionId))
+        }
+
+        if let name = try? container.decode(String.self, forKey: .name) {
+            self.name = name
+        } else {
+            name = try additionalContainer.decode(String.self, forKey: .collectionName)
+        }
+
+        if let kind = try? container.decode(String.self, forKey: .type),
+           let mediaKind = Kind(rawValue: kind) {
             type = mediaKind.mediaType
         } else {
             type = .ebook
@@ -56,8 +69,6 @@ extension Media: Codable {
         imageUrl = try container.decode(URL.self, forKey: .imageUrl)
         previewUrl = (try? container.decode(URL.self, forKey: .previewUrl)) ?? nil
         releaseDate = try container.decode(Date.self, forKey: .releaseDate)
-
-        let additionalContainer = try decoder.container(keyedBy: AdditionalKeys.self)
 
         if let description = try? container.decode(String.self, forKey: .description) {
             self.description = description
