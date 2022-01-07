@@ -25,7 +25,7 @@ struct SearchView: View {
             .pickerStyle(SegmentedPickerStyle())
 
             ZStack {
-                MediaListView()
+                SearchListView()
                     .environmentObject(searchViewModel)
                 
                 if searchViewModel.isFetchingInitialResults {

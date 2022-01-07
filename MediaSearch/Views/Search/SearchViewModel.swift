@@ -18,6 +18,7 @@ class SearchViewModel: ObservableObject {
     @Published var showErrorAlert = false
     @Published var isLoadingMore = false
     @Published var isFetchingInitialResults = false
+    @Published var isLinkActive = false
     @Published var mediaType = MediaType.ebook {
         didSet {
             search()
@@ -29,9 +30,10 @@ class SearchViewModel: ObservableObject {
     private var previousQuery: SearchQuery?
     private var resultIds: [String: String] = [:]
     private var loadingMoreComplete = false
-    private var queryLimit: Int = 20
+    private var queryLimit: Int = 16
 
     var errorMessage: String?
+
 
     func search() {
         guard !searchTerm.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
