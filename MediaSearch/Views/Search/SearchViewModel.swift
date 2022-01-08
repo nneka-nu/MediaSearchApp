@@ -32,8 +32,12 @@ class SearchViewModel: ObservableObject {
     private var loadingMoreComplete = false
     private var queryLimit: Int = 16
 
+    var urlSession: URLSession
     var errorMessage: String?
 
+    init(urlSession: URLSession = .shared) {
+        self.urlSession = urlSession
+    }
 
     func search() {
         guard !searchTerm.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
@@ -79,7 +83,10 @@ extension SearchViewModel {
             isFetchingInitialResults = true
         }
         
-        let apiManager = APIManager<ITunesAPIResponse>(path: .search(query))
+        let apiManager = APIManager<ITunesAPIResponse>(
+            path: .search(query),
+            urlSession: urlSession
+        )
         requestSubscription = apiManager.send()
             .sink { [weak self] completion in
                 self?.isFetchingInitialResults = false
@@ -94,7 +101,10 @@ extension SearchViewModel {
     private func sendImageRequest(url: URL) {
         guard imagesData[url] == nil else { return }
 
-        let apiManager = APIManager<Void>(path: .image(url))
+        let apiManager = APIManager<Void>(
+            path: .image(url),
+            urlSession: urlSession
+        )
         apiManager.sendForImage()
             .sink { data in
                 if !data.isEmpty {
