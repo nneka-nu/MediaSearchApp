@@ -71,9 +71,11 @@ extension Media: Codable {
         releaseDate = try container.decode(Date.self, forKey: .releaseDate)
 
         if let description = try? container.decode(String.self, forKey: .description) {
-            self.description = description
+            self.description = description.stripHTML()
+        } else if let description = try? additionalContainer.decode(String.self, forKey: .longDescription) {
+            self.description = description.stripHTML()
         } else {
-            description = (try? additionalContainer.decode(String.self, forKey: .longDescription)) ?? "No description"
+            description = "No description."
         }
 
         if let genres = try? container.decode([String].self, forKey: .genres) {

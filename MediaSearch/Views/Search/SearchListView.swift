@@ -73,7 +73,7 @@ struct SearchListView: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(2)
 
-                Text(mediaItem.description.stripHTML())
+                Text(mediaItem.description)
                     .lineLimit(3)
             }
         }

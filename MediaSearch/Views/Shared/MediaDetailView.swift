@@ -38,7 +38,7 @@ struct MediaDetailView: View {
                         .font(.headline)
                         .padding([.top, .bottom], 8)
 
-                    Text(media.description.stripHTML())
+                    Text(media.description)
                         .padding([.bottom], 16)
                 }
                 .padding()
