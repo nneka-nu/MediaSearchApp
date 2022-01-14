@@ -91,6 +91,7 @@
 		B9B138D727886E4F00BEF32B /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
 		B9B138D927886E6600BEF32B /* APIManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManagerTests.swift; sourceTree = "<group>"; };
 		B9B138DC2788749100BEF32B /* APIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHelper.swift; sourceTree = "<group>"; };
+		B9F03A1927920AC900BAB828 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				B9494834278926A200C5AD40 /* README.md */,
+				B9F03A1927920AC900BAB828 /* .gitignore */,
 				B9A669202783BA540012E924 /* MediaSearch */,
 				B9A669312783BA560012E924 /* MediaSearchTests */,
 				B9A6693B2783BA560012E924 /* MediaSearchUITests */,
