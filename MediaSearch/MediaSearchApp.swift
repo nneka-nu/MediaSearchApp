@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct MediaSearchApp: App {
+    let coreDataManager = CoreDataManager.shared
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.managedObjectContext, coreDataManager.container.viewContext)
         }
     }
 }
