@@ -35,7 +35,7 @@ struct ContentView: View {
 
     var favorites: some View {
         NavigationView {
-            Text("Favorites")
+            FavoritesSummaryView()
                 .navigationTitle("Favorites")
         }
         .navigationViewStyle(StackNavigationViewStyle())

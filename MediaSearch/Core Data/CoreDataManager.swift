@@ -18,7 +18,7 @@ class CoreDataManager {
         for number in 1...21 {
             let favorite = FavoriteMedia(context: viewContext)
             favorite.id = "\(number)"
-            favorite.title = "Title \(number)"
+            favorite.title = "Long Title \(number) Random Headline Sub headline"
             favorite.image = nil
 
             if number <= 7 {
@@ -33,6 +33,12 @@ class CoreDataManager {
         try? viewContext.save()
 
         return manager
+    }()
+
+    static let previewItem: FavoriteMedia = {
+        let fav = FavoriteMedia(context: CoreDataManager.preview.container.viewContext)
+        fav.title = "This is a longish title."
+        return fav
     }()
 
     let container: NSPersistentContainer

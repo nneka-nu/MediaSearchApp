@@ -6,22 +6,31 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct FavoritesSummaryView: View {
-    @FetchRequest
-    private var ebookFavorites: FetchedResults<FavoriteMedia>
+    @FetchRequest private var favorites: FetchedResults<FavoriteMedia>
+    private var rows: [GridItem] = Array(
+        repeating: .init(.fixed(45), spacing: 20, alignment: .leading),
+        count: 3
+    )
 
     init() {
         let request = FavoriteMedia.fetchRequest()
-        request.fetchLimit = 7
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \FavoriteMedia.createdAt, ascending: false)]
-        request.predicate = NSPredicate(format: "type == %@", MediaType.ebook.rawValue)
-        _ebookFavorites = FetchRequest(fetchRequest: request)
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \FavoriteMedia.id, ascending: true)]
+        request.fetchLimit = 1
+        _favorites = FetchRequest(fetchRequest: request)
     }
 
     var body: some View {
-        List(ebookFavorites) { media in
-            Text("\(media.title) \(media.type)")
+        if favorites.count == 0 {
+            Text("No favorites found.")
+        } else {
+            ScrollView(showsIndicators: false) {
+                FavoritesSummaryGridView(rows: rows, type: .ebook)
+                FavoritesSummaryGridView(rows: rows, type: .movie)
+                FavoritesSummaryGridView(rows: rows, type: .tvShow)
+            }
         }
     }
 }
