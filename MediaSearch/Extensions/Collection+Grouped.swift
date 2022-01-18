@@ -1,5 +1,5 @@
 //
-//  Array+Grouped.swift
+//  Collection+Grouped.swift
 //  MediaSearch
 //
 //  Created by Nneka Udoh on 1/16/22.
@@ -8,7 +8,7 @@
 import Foundation
 
 extension Collection {
-    // group values in a one-dimensional array by the specified number
+    // group values in a collection by the specified number
     func grouped(by number: Int) -> [[Element]] {
         var array: [[Element]] = []
 

@@ -18,7 +18,6 @@ class SearchViewModel: ObservableObject {
     @Published var showErrorAlert = false
     @Published var isLoadingMore = false
     @Published var isFetchingInitialResults = false
-    @Published var isLinkActive = false
     @Published var mediaType = MediaType.ebook {
         didSet {
             search()

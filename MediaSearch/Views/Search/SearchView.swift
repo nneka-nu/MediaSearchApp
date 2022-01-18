@@ -25,9 +25,8 @@ struct SearchView: View {
             .pickerStyle(SegmentedPickerStyle())
 
             ZStack {
-                SearchListView()
-                    .environmentObject(searchViewModel)
-                
+                SearchListView(searchViewModel: searchViewModel)
+
                 if searchViewModel.isFetchingInitialResults {
                     ProgressView()
                 }
